@@ -11,20 +11,20 @@ class Character():
         self.damage = damage
         self.inventory = inventory
         self.money = money
-    
+
 
 class User(Character):
 
     def __init__(self, name, health, damage, defense,inventory, money,style):
         super().__init__(name, health, damage, defense,inventory, money)
         self.style = style
-        
+
     def check_inventory(self,check):
         if check == 'inv':
             print('Your inventory holds {}'.format(self.inventory))
             check = None
-        return check    
-        
+        return check
+
 
 file_read = open('username.txt', 'r')
 usernames = eval(file_read.read())
@@ -51,7 +51,7 @@ while no_chosen_account==None:
                 print('That username is invalid')
                 username = None
     elif  no_chosen_account == '2' or no_chosen_account.lower() == 'no':
-        
+
         create_username = None
         while create_username==None:
             create_username = input("To create an account type a username")
@@ -63,6 +63,9 @@ while no_chosen_account==None:
                 file_write.write(str(usernames))
                 file_write.close()
                 username = create_username
+            else:
+                print(create_username + 'exists please try again')
+                create_username = None
     else:
         print('{} is not a valid choice'.format(no_chosen_account))
         no_chosen_account = None
@@ -90,9 +93,9 @@ while fight_class==None:
     else:
         print('{} is not a valid choice'.format(fight_class))
         fight_class = None
-        
+
 character = User(username,50,10,10,inventory,100,fight_class)
-        
+
 print('Time to begin you journey')
 print('Would you like to follow the left path to forest or the right path into the town')
 choice = None
@@ -111,7 +114,7 @@ while choice == None:
                 inventory.append('foxmeat')
                 print('added fox meat to inventory\n Your inventory now holds {}'.format(inventory))
             elif choice == 'no':
-                print('You didnt add anything\n you inventory now holds {}'.format(inventory))        
+                print('You didnt add anything\n you inventory now holds {}'.format(inventory))
         elif (choice == 'ignore'):
             print('Thec fox is ferocious and decides to chase and attack you and deals 5 damage to you')
             health -= 5
@@ -127,7 +130,7 @@ while choice == None:
                     print('added fox meat to inventory\n Your inventory now holds {}'.format(inventory))
                 elif choice == 'no':
                     print('You didnt add anything\n you inventory now holds {}'.format(inventory))
-                    
+
             elif(choice == 'run'):
                 print('you manage to escape from harms way')
     elif choice == None:
@@ -135,7 +138,3 @@ while choice == None:
     else:
         choice = None
         print('try left')
-              
-            
-    
-    
