@@ -1,34 +1,13 @@
 #RPG
 import time
-import random
-
-
-class Character():
-    def __init__(self, name, health, damage, defense,inventory, money):
-        self.name = name
-        self.defense =defense
-        self.health = health
-        self.damage = damage
-        self.inventory = inventory
-        self.money = money
-
-
-class User(Character):
-
-    def __init__(self, name, health, damage, defense,inventory, money,style):
-        super().__init__(name, health, damage, defense,inventory, money)
-        self.style = style
-
-    def check_inventory(self,check):
-        if check == 'inv':
-            print('Your inventory holds {}'.format(self.inventory))
-            check = None
-        return check
-
+from Character_library import *
+from item_library import weapon_directory
 
 file_read = open('username.txt', 'r')
 usernames = eval(file_read.read())
-print(usernames)
+
+
+
 
 print('HELLO and WELCOME!')
 no_chosen_account = None
@@ -75,20 +54,19 @@ fight_class = None
 
 inventory = []
 
-
-
-
-
 while fight_class==None:
     fight_class = input("hello {}, let's now pick a style of fighting\n1) Melee\n2) Range \n3) Mage\n".format(username))
     if fight_class == '1' or fight_class.lower() == 'melee':
         print('you get a blunt stick')
+        fight_class = 'melee'
         inventory.append('blunt stick')
     elif  fight_class == '2' or fight_class.lower() == 'range':
-        print('you get 10 rocks')
-        inventory.append('10 rocks')
+        print('you get a bag of rocks')
+        fight_class = 'range'
+        inventory.append('bag of rocks')
     elif fight_class == '3' or fight_class.lower() == 'mage':
         print('you get a stick')
+        fight_class = 'mage'
         inventory.append('stick')
     else:
         print('{} is not a valid choice'.format(fight_class))
@@ -105,36 +83,43 @@ while choice == None:
     choice = character.check_inventory(choice)
     if choice == 'left':
         print('you encounter a fox')
+        fox = Monster('fox',10,2,2,['fox meat','fur'],15,10)
         time.sleep(1)
         choice = input('Would you like to fight or ignore the fox\n')
         if choice == 'fight':
-            print("you use {} to kill the fox".format(inventory[0]))
-            choice = input('would you like to pick up the left over fox meat yes or no\n')
+            print("you use use your hands to wrestle the fox")
+            print('that was a difficult fight, you decide to equip your weapon from earlier')
+            character.equip_weapon(inventory[0],weapon_directory)
+            choice = input("would you like to browse the fox's belongings yes or no\n")
             if choice == 'yes':
-                inventory.append('foxmeat')
-                print('added fox meat to inventory\n Your inventory now holds {}'.format(inventory))
+                character.browse_monster_inventory(fox.name,fox.money,fox.inventory)
             elif choice == 'no':
                 print('You didnt add anything\n you inventory now holds {}'.format(inventory))
         elif (choice == 'ignore'):
             print('Thec fox is ferocious and decides to chase and attack you and deals 5 damage to you')
-            health -= 5
+            character.health -= 5  
             time.sleep(1)
-            print('you have {} health left'.format(health))
+            print('you have {} health left'.format(character.health))
             time.sleep
             choice = input('Would you like to fight or run\n')
             if choice == 'fight':
-                print('you dismantle the fox with ease using {}'.format(inventory[0]))
-                choice = input('would you like to pick up the left over fox meat yes or no\n')
+                print('you punch the fox till it dies')
+                time.sleep(1)
+                print('that was a difficult fight, you decide to equip your weapon from earlier')
+                character.equip_weapon(inventory[0],weapon_directory)
+                choice = input("would you like to browse the fox's belongings yes or no\n")
                 if choice == 'yes':
-                    inventory.append('foxmeat')
-                    print('added fox meat to inventory\n Your inventory now holds {}'.format(inventory))
+                    character.browse_monster_inventory(fox.name,fox.money,fox.inventory)
                 elif choice == 'no':
                     print('You didnt add anything\n you inventory now holds {}'.format(inventory))
 
             elif(choice == 'run'):
                 print('you manage to escape from harms way')
+                print('you decide to equip your weapon to feel safer')
+                character.equip_weapon(inventory[0],weapon_directory)
     elif choice == None:
         pass
     else:
         choice = None
+        print('its a dead end')
         print('try left')
