@@ -1,7 +1,7 @@
 #RPG
 import time
 from Character_library import *
-from item_library import weapon_directory
+from item_library import *
 
 file_read = open('username.txt', 'r')
 usernames = eval(file_read.read())
@@ -24,7 +24,7 @@ while no_chosen_account==None:
                     if password == usernames[username]['password']:
                         pass
                     else:
-                        print('your password was incoreect')
+                        print('your password was incorect')
                         password = None
             else:
                 print('That username is invalid')
@@ -80,7 +80,6 @@ choice = None
 
 while choice == None:
     choice = input('Type left or right\n')
-    choice = character.check_inventory(choice)
     if choice == 'left':
         print('you encounter a fox')
         fox = Monster('fox',10,2,2,['fox meat','fur'],15,10)
@@ -89,15 +88,11 @@ while choice == None:
         if choice == 'fight':
             print("you use use your hands to wrestle the fox")
             print('that was a difficult fight, you decide to equip your weapon from earlier')
-            character.equip_weapon(inventory[0],weapon_directory)
-            choice = input("would you like to browse the fox's belongings yes or no\n")
-            if choice == 'yes':
-                character.browse_monster_inventory(fox.name,fox.money,fox.inventory)
-            elif choice == 'no':
-                print('You didnt add anything\n you inventory now holds {}'.format(inventory))
+            character.equip_weapon(inventory[0])
+            character.browse_monster_inventory(fox.name,fox.money,fox.inventory)
         elif (choice == 'ignore'):
-            print('Thec fox is ferocious and decides to chase and attack you and deals 5 damage to you')
-            character.health -= 5  
+            print('The fox is ferocious and decides to chase and attack you and deals 5 damage to you')
+            character.health -= 5
             time.sleep(1)
             print('you have {} health left'.format(character.health))
             time.sleep
@@ -106,20 +101,15 @@ while choice == None:
                 print('you punch the fox till it dies')
                 time.sleep(1)
                 print('that was a difficult fight, you decide to equip your weapon from earlier')
-                character.equip_weapon(inventory[0],weapon_directory)
-                choice = input("would you like to browse the fox's belongings yes or no\n")
-                if choice == 'yes':
-                    character.browse_monster_inventory(fox.name,fox.money,fox.inventory)
-                elif choice == 'no':
-                    print('You didnt add anything\n you inventory now holds {}'.format(inventory))
-
+                character.equip_weapon(inventory[0])
+                character.browse_monster_inventory(fox.name,fox.money,fox.inventory)
             elif(choice == 'run'):
                 print('you manage to escape from harms way')
                 print('you decide to equip your weapon to feel safer')
-                character.equip_weapon(inventory[0],weapon_directory)
-    elif choice == None:
-        pass
+                character.equip_weapon(inventory[0])
     else:
         choice = None
         print('its a dead end')
         print('try left')
+character.check_inventory()
+character.check_inventory()
