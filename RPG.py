@@ -111,5 +111,4 @@ while choice == None:
         choice = None
         print('its a dead end')
         print('try left')
-character.check_inventory()
-character.check_inventory()
+
